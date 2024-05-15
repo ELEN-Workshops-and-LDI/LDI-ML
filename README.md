@@ -22,7 +22,7 @@ This repository contains a comprehensive collection of Jupyter notebooks and Pyt
         modP-->opt
         modV-->opt
         subgraph Optimisation
-        opt["RecedingHorizon.ipynb"]:::nb
+        opt["RollingOptimisation.ipynb"]:::nb
         end
 
     
@@ -156,4 +156,11 @@ The notebook puts a strong emphasis on the highly non-linear relationship betwee
 
 
 ## Optimisation Folder
-### RecedingHorizon.ipynb
+### RollingOptimisation.ipynb
+This notebook uses the output of ARMA for the optimisation of volumes purchased in time that meet a target volume while minimising cost.
+#### Key Steps
+1. Implementation of a solution to the linear program formulation of the problem
+2. Implementation of multiple approaches to dealing with the uncertainty of the data
+3. Comparison of results
+#### Future Action
+Input and testing of results from other predictive models, e.g. ARIMAX and LSTM. This was not done due to these components of the project being develope simultaneously.
