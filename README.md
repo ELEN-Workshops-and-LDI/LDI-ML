@@ -139,13 +139,13 @@ This notebook integrates exogenous variables into the time series analysis using
 This notebook attempts to perform linear regression and regression by deep neural networks on volume monthly weighted water allocation prices for their prediction based on monthly total traded water volumes to examine the possibility of creating a simple price prediction model without initially tending to use exogenous variables and feature engineering tools. Furthermore, the notebook attempts to perform time series analysis for future price prediction using an LSTM neural network. 
 
 #### Key Steps
-•	Data is first processed, and monthly volume weighted water prices are calculated for each month of each representative year in the water market data.
-•	Lower and upper limitations are posed on the quality data obtained from the above step.
-•	The new dataset is then divided into training and testing datasets, scaled, and used for training a linear regression model for prediction.
-•	A deep neural network is then created with two Dense hidden layers for regression analysis to capture highly non-linear relationships between monthly total traded volume and monthly volume weighted water prices.
-•	An LSTM neural network is created with the aim of performing time series analysis for future price prediction using only monthly volume weighted water prices.
-•	Three datasets of exogenous variables, namely monthly mean temperature, monthly rainfall, and monthly mean water course discharge, are imported, cleaned, and merged with the volume-price data obtained in the second key step above.
-In the future:
+1.	Data is first processed, and monthly volume weighted water prices are calculated for each month of each representative year in the water market data.
+2.	Lower and upper limitations are posed on the quality data obtained from the above step.
+3.	The new dataset is then divided into training and testing datasets, scaled, and used for training a linear regression model for prediction.
+4.	A deep neural network is then created with two Dense hidden layers for regression analysis to capture highly non-linear relationships between monthly total traded volume and monthly volume weighted water prices.
+5.	An LSTM neural network is created with the aim of performing time series analysis for future price prediction using only monthly volume weighted water prices.
+6.	Three datasets of exogenous variables, namely monthly mean temperature, monthly rainfall, and monthly mean water course discharge, are imported, cleaned, and merged with the volume-price data obtained in the second key step above.
+#### Future Action
 •	an LSTM model will be trained using more reliable data obtained from the use of feature engineering tools
 •	A cross-validated grid search and Bayesian optimization will be performed for tuning the model’s hyperparameters
 •	Different multi-arm bandit algorithms, such as epsilon-greedy, upper confidence bound, etc.,  will be employed to remove insignificant weights and reduce the network size.
