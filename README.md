@@ -12,7 +12,7 @@ This repository contains a comprehensive collection of Jupyter notebooks and Pyt
       zd-->arma["ARMA.ipynb"]:::nb
       pca["EXOG_PCA_INDIVIDUAL.ipynb"]:::nb
       outl["OUTLIER_ANALYSIS_REMOVAL.ipynb"]:::nb
-      arimax["ARIMAX.ipynb"]:::nb
+      arimax["ARIMAX_PCA_COMBINED.ipynb"]:::nb
       pca-->fet("Extracted Features"):::output
       zd-->arimax
       end
@@ -46,6 +46,9 @@ To run the scripts and notebooks in this repository, you will need the following
 - `requests`: For making HTTP requests to fetch data from APIs.
 - `xml.etree.ElementTree`: For parsing XML data.
 - `jupyter`: For running Jupyter notebooks.
+- `keras`: For building and training deep learning models.
+- `tensorflow`: For building and training deep learning models.
+
 
 Scripts can be run using jupyter notebook.
 
@@ -118,7 +121,7 @@ Run the notebook, data will be visualised
 ### ARIMAX.ipynb
 This notebook integrates exogenous variables into the time series analysis using ARIMAX models to improve forecasting accuracy. It combines principal component analysis (PCA) with SARIMAX modeling for enhanced prediction.
 
-It does this by:
+#### Key Steps
 1. Load zone data and exogenous datasets (e.g., water temperature, rainfall, watercourse discharge).
 2. Separate and sort the data based on cluster assignments and creation dates.
 3. Align exogenous data with the main dataset by date and fill missing values.
@@ -130,6 +133,27 @@ It does this by:
 9. Fit the SARIMAX model using the training data and specified parameters.
 10. Generate forecasts for the test data.
 11. Visualize the actual vs. forecasted prices, including confidence intervals.
+
+
+### REGRESSION_LSTM.ipynb
+This notebook attempts to perform linear regression and regression by deep neural networks on volume monthly weighted water allocation prices for their prediction based on monthly total traded water volumes to examine the possibility of creating a simple price prediction model without initially tending to use exogenous variables and feature engineering tools. Furthermore, the notebook attempts to perform time series analysis for future price prediction using an LSTM neural network. 
+
+#### Key Steps
+•	Data is first processed, and monthly volume weighted water prices are calculated for each month of each representative year in the water market data.
+•	Lower and upper limitations are posed on the quality data obtained from the above step.
+•	The new dataset is then divided into training and testing datasets, scaled, and used for training a linear regression model for prediction.
+•	A deep neural network is then created with two Dense hidden layers for regression analysis to capture highly non-linear relationships between monthly total traded volume and monthly volume weighted water prices.
+•	An LSTM neural network is created with the aim of performing time series analysis for future price prediction using only monthly volume weighted water prices.
+•	Three datasets of exogenous variables, namely monthly mean temperature, monthly rainfall, and monthly mean water course discharge, are imported, cleaned, and merged with the volume-price data obtained in the second key step above.
+In the future:
+•	an LSTM model will be trained using more reliable data obtained from the use of feature engineering tools
+•	A cross-validated grid search and Bayesian optimization will be performed for tuning the model’s hyperparameters
+•	Different multi-arm bandit algorithms, such as epsilon-greedy, upper confidence bound, etc.,  will be employed to remove insignificant weights and reduce the network size.
+•	A neural network integrated with Bayesian probability, also known as Bayesian neural network, will be employed to have more reliable price prediction model
+
+#### Usage
+The notebook puts a strong emphasis on the highly non-linear relationship between monthly total traded water volume and monthly volume weighted price by proving ineffectiveness of regression methods of machine learning and deep learning. The results clearly demonstrate a need for more reliable data sources for exogenous variables and feature engineering tools, including but not limited to KMeans and Principal Component Analysis. 
+
 
 ## Optimisation Folder
 ### RecedingHorizon.ipynb
