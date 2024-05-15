@@ -1,7 +1,23 @@
 # Water Data Analysis
 
 ## Overview
-This repository contains data and analysis scripts for examining historical rainfall patterns at various stations. The primary dataset is `rainfalldata.csv` which includes records of annual and monthly rainfall measurements across different years and locations.
+This repository contains a comprehensive collection of Jupyter notebooks and Python scripts designed for in-depth analysis of water data. The primary focus is on time series forecasting, clustering techniques, and principal component analysis (PCA). These tools aim to uncover patterns, trends, and relationships within the water data, enabling better understanding and decision-making.
+
+## Installation requirements
+### Required Packages
+To run the scripts and notebooks in this repository, you will need the following Python packages:
+
+- `pandas`: For data manipulation and analysis.
+- `numpy`: For numerical operations.
+- `matplotlib`: For data visualization.
+- `seaborn`: For statistical data visualization.
+- `scikit-learn`: For machine learning algorithms, including DBSCAN.
+- `statsmodels`: For statistical modeling, including ARMA.
+- `requests`: For making HTTP requests to fetch data from APIs.
+- `xml.etree.ElementTree`: For parsing XML data.
+- `jupyter`: For running Jupyter notebooks.
+
+Scripts can be run using jupyter notebook.
 
 ## Downloaded Datasets
 Downloaded datasets included in this file, primarily include the ALL_water_share_trading.csv, which is the dataset of all water trades in Australia, from the official water share register (https://waterregister.vic.gov.au/water-trading/water-share-trading)
@@ -41,20 +57,44 @@ This notebook is used as a preliminary analysis to cluster the stations into gro
 We seperate the three zones analysed and add cluster to the datasets before exporting to CSV: zone_data_1A_clustered, zone_data_6_clustered, zone_data_7_clustered.
 
 ## ARMA.ipynb
-This section performs ARMA analysis for the 
+This section performs ARMA (AutoRegressive Moving Average) analysis for understanding and forecasting time series data related fro wateer share trading prices. 
+
+### Key Steps in the Notebook:
+- The data is first loaded and preprocessed to ensure it is suitable for time series analysis.
+- The model is fitted to the data, and diagnostics are run to check the adequacy of the model fit.
+- Forecasts are generated from the model, and the results are visualized to assess the model's predictive power.
+
+(In the Future, Stationarity tests will be conducted to check if the data needs differencing to make it stationary.)
+
+### Usage:
+To perform ARMA analysis, load your time series data into the notebook, ensuring it is clean and appropriately indexed by date. Adjust the model parameters based on the characteristics of your data.
 
 
+## EXOG_PCA_INDIVIDUAL.ipynb
+This notebook is used to perform PCA analysis on the exogenous data to identify the principal components and understand the relationships between the variables.
+
+### Usage:
+To perform PCA analysis, insert the file path of the time series data you want to analyze in the `file_path` column of the `data_files` list. Adjust the `row_thresh_multiplier` to control the amount of data to include in the analysis. (or the threshold to remove the data if it is missing)
 
 
+## OUTLIER_ANALYSIS_REMOVAL.ipynb
+This section uses multiple methods to remove and clean data. From trying k-means algorithms, to trying rolling mean to better clean and remove outliers.
 
-## Usage
-To analyze the data, refer to the Jupyter notebooks provided in this repository which include detailed analysis on annual and monthly trends, station comparisons, and other meteorological insights.
+### Usage
+Run the notebook, data will be visualised
 
-## Contribution
-Contributions to this project are welcome. You can contribute in the following ways:
-- Data analysis and visualization
-- Improving the data cleaning process
-- Adding more data sources
+## ARIMAX.ipynb
+This notebook integrates exogenous variables into the time series analysis using ARIMAX models to improve forecasting accuracy. It combines principal component analysis (PCA) with SARIMAX modeling for enhanced prediction.
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+It does this by:
+1. Load zone data and exogenous datasets (e.g., water temperature, rainfall, watercourse discharge).
+2. Separate and sort the data based on cluster assignments and creation dates.
+3. Align exogenous data with the main dataset by date and fill missing values.
+4. Standardize the exogenous data using StandardScaler.
+5. Perform PCA to reduce dimensionality and identify principal components.
+6. Create a final DataFrame by joining PCA components with the target variable (Price Per ML ($)).
+7. Align and resample exogenous data to daily frequency.
+8. Split the data into training and testing sets.
+9. Fit the SARIMAX model using the training data and specified parameters.
+10. Generate forecasts for the test data.
+11. Visualize the actual vs. forecasted prices, including confidence intervals.
