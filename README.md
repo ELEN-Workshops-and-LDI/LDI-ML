@@ -3,6 +3,29 @@
 ## Overview
 This repository contains a comprehensive collection of Jupyter notebooks and Python scripts designed for in-depth analysis of water data. The primary focus is on time series forecasting, clustering techniques, and principal component analysis (PCA). These tools aim to uncover patterns, trends, and relationships within the water data, enabling better understanding and decision-making.
 
+```mermaid
+  graph TD;
+  
+      A("Trading Data")-->B["DBSCAN.ipynb"]:::nb;
+      subgraph Machine Learning
+      B-->zd("Zone Data"):::output
+      zd-->arma["ARMA.ipynb"]:::nb
+      end
+        arma-->modP("ARMA_output_Price.csv"):::output
+        arma-->modV("ARMA_output_Volume.csv"):::output
+
+        modP-->opt
+        modV-->opt
+        subgraph Optimisation
+        opt["RecedingHorizon.ipynb"]:::nb
+        end
+
+    exog("Exogenous Data")-->arma
+
+    classDef nb fill:#f96
+    classDef output stroke:#00f
+```
+
 ## Installation requirements
 ### Required Packages
 To run the scripts and notebooks in this repository, you will need the following Python packages:
@@ -58,34 +81,34 @@ This notebook is used as a preliminary analysis to cluster the stations into gro
 
 We seperate the three zones analysed and add cluster to the datasets before exporting to CSV: zone_data_1A_clustered, zone_data_6_clustered, zone_data_7_clustered.
 
-## ARMA.ipynb
+### ARMA.ipynb
 This section performs ARMA (AutoRegressive Moving Average) analysis for understanding and forecasting time series data related fro wateer share trading prices. 
 
-### Key Steps in the Notebook:
+#### Key Steps in the Notebook:
 - The data is first loaded and preprocessed to ensure it is suitable for time series analysis.
 - The model is fitted to the data, and diagnostics are run to check the adequacy of the model fit.
 - Forecasts are generated from the model, and the results are visualized to assess the model's predictive power.
 
 (In the Future, Stationarity tests will be conducted to check if the data needs differencing to make it stationary.)
 
-### Usage:
+#### Usage:
 To perform ARMA analysis, load your time series data into the notebook, ensuring it is clean and appropriately indexed by date. Adjust the model parameters based on the characteristics of your data.
 
 
-## EXOG_PCA_INDIVIDUAL.ipynb
+### EXOG_PCA_INDIVIDUAL.ipynb
 This notebook is used to perform PCA analysis on the exogenous data to identify the principal components and understand the relationships between the variables.
 
-### Usage:
+#### Usage:
 To perform PCA analysis, insert the file path of the time series data you want to analyze in the `file_path` column of the `data_files` list. Adjust the `row_thresh_multiplier` to control the amount of data to include in the analysis. (or the threshold to remove the data if it is missing)
 
 
-## OUTLIER_ANALYSIS_REMOVAL.ipynb
+### OUTLIER_ANALYSIS_REMOVAL.ipynb
 This section uses multiple methods to remove and clean data. From trying k-means algorithms, to trying rolling mean to better clean and remove outliers.
 
-### Usage
+#### Usage
 Run the notebook, data will be visualised
 
-## ARIMAX.ipynb
+### ARIMAX.ipynb
 This notebook integrates exogenous variables into the time series analysis using ARIMAX models to improve forecasting accuracy. It combines principal component analysis (PCA) with SARIMAX modeling for enhanced prediction.
 
 It does this by:
@@ -100,3 +123,6 @@ It does this by:
 9. Fit the SARIMAX model using the training data and specified parameters.
 10. Generate forecasts for the test data.
 11. Visualize the actual vs. forecasted prices, including confidence intervals.
+
+## Optimisation Folder
+### RecedingHorizon.ipynb
