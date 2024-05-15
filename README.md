@@ -5,11 +5,16 @@ This repository contains a comprehensive collection of Jupyter notebooks and Pyt
 
 ```mermaid
   graph TD;
-  
+        exog("Exogenous Data")-->pca
       A("Trading Data")-->B["DBSCAN.ipynb"]:::nb;
       subgraph Machine Learning
       B-->zd("Zone Data"):::output
       zd-->arma["ARMA.ipynb"]:::nb
+      pca["EXOG_PCA_INDIVIDUAL.ipynb"]:::nb
+      outl["OUTLIER_ANALYSIS_REMOVAL.ipynb"]:::nb
+      arimax["ARIMAX.ipynb"]:::nb
+      pca-->fet("Extracted Features"):::output
+      zd-->arimax
       end
         arma-->modP("ARMA_output_Price.csv"):::output
         arma-->modV("ARMA_output_Volume.csv"):::output
@@ -20,7 +25,9 @@ This repository contains a comprehensive collection of Jupyter notebooks and Pyt
         opt["RecedingHorizon.ipynb"]:::nb
         end
 
-    exog("Exogenous Data")-->arma
+    
+    fet-->arimax
+    
 
     classDef nb fill:#f96
     classDef output stroke:#00f
