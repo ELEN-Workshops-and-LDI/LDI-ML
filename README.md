@@ -22,7 +22,7 @@ This repository contains a comprehensive collection of Jupyter notebooks and Pyt
         modP-->opt
         modV-->opt
         subgraph Optimisation
-        opt["RecedingHorizon.ipynb"]:::nb
+        opt["RollingOptimisation.ipynb"]:::nb
         end
 
     
