@@ -52,14 +52,14 @@ To run the scripts and notebooks in this repository, you will need the following
 
 Scripts can be run using jupyter notebook.
 
-## Input Data
+## Input Data (data folder)
 ### Downloaded Datasets
 Downloaded datasets included in this file, primarily include the ALL_water_share_trading.csv, which is the dataset of all water trades in Australia, from the official water share register (https://waterregister.vic.gov.au/water-trading/water-share-trading)
 
-Stock data is also included in the SP500_data, for later analysis
+ASX200 data is also included in the data folder, for later analysis
 
 ### Fetching Exogenous Data
-So we fetch exogenous data via the GET_WATER_DATA_ONLINE scripts.
+So we fetch exogenous data via the [A1] - GET_EXOG_VARS scripts.
 
 We use the Sensor Observation Service (SOS) to fetch the data. using the official Sensor Observation Service (SOS) API. (http://www.bom.gov.au/waterdata/wiski-web-public/Guide%20to%20Sensor%20Observation%20Services%20(SOS2)%20for%20Water%20Data%20%20Online%20v1.0.1.pdf)
 
@@ -78,8 +78,8 @@ The main initial variables and parameters to set for each notebook are:
 
 The script then uses XML calls to fetch each station in the bounding box which has the required parameters, and then get the data from each station for that time period. Lasty, the data gets processed and pivoted so that stations are the columns, with the date being the rows before exporting to a CSV.
 
-## Machine Learning Folder
-### DBSCAN.ipynb
+## [3] Machine Learning Folder
+### DBSCAN.ipynb ([3.1] - OUTLIER_REMOVAL)
 This notebook is used as a preliminary analysis to cluster the stations into groups, based on the price vs time relationship. It utilizes the DBSCAN clustering algorithm to identify clusters in the water trading data. The data is segmented by specific trading zones, and the clustering helps in understanding the patterns in water price fluctuations over time.
 
 #### Key Steps in the Notebook:
@@ -105,7 +105,7 @@ This section performs ARMA (AutoRegressive Moving Average) analysis for understa
 To perform ARMA analysis, load your time series data into the notebook, ensuring it is clean and appropriately indexed by date. Adjust the model parameters based on the characteristics of your data.
 
 
-### EXOG_PCA_INDIVIDUAL.ipynb
+### EXOG_PCA_INDIVIDUAL.ipynb ([3.2] - EXOG_PCA)
 This notebook is used to perform PCA analysis on the exogenous data to identify the principal components and understand the relationships between the variables.
 
 #### Usage:
@@ -118,8 +118,80 @@ This section uses multiple methods to remove and clean data. From trying k-means
 #### Usage
 Run the notebook, data will be visualised
 
-### ARIMAX.ipynb
-This notebook integrates exogenous variables into the time series analysis using ARIMAX models to improve forecasting accuracy. It combines principal component analysis (PCA) with SARIMAX modeling for enhanced prediction.
+### Data Processing.ipynb
+This notebook helps to obtain more reliable datasets from the raw water market data by inspecting, analysing, and utilizing its features. 
+#### Key Steps
+1.	Inspecting and analysing the features of the raw water market data
+2.	Utilizing relevant non-numeric features of the data to obtain comparatively more reliable datasets
+
+### Proven Non-Linearity.ipynb ([3.3-3.11] - NEURAL_NETWORKS Folder)
+This notebook helps to capture non-linear relationships between total monthly traded volume and volume weighted average price datasets. 
+#### Key Steps
+1.	Creating a deep neural network with several Dense hidden layers to try to capture non-linear relationships between total monthly traded volume and volume weighted average price datasets
+2.	Preparing a very small training dataset to intentionally promote over-fitting by the model
+3.	Training the model with a training dataset using a batch size of 1
+4.	Making predictions on both training and testing datasets
+
+### Time Series Estimation via a Deep Neural Network.ipynb ([3.3-3.11] - NEURAL_NETWORKS Folder)
+This notebook helps to make predictions for the water transaction price time series dataset using a DNN model.. 
+#### Key Steps
+1.	Creating a neural network with two Dense hidden layers for time series prediction of the water allocation price dataset
+2.	Training the model with a training dataset
+3.	Making predictions on both training and testing datasets
+
+### Time Series Estimation via an LSTM Network.ipynb ([3.3-3.11] - NEURAL_NETWORKS Folder)
+This notebook helps to make predictions for the water transaction price time series dataset using an LSTM model.. 
+
+This notebook attempts to perform linear regression and regression by deep neural networks on volume monthly weighted water allocation prices for their prediction based on monthly total traded water volumes to examine the possibility of creating a simple price prediction model without initially tending to use exogenous variables and feature engineering tools. Furthermore, the notebook attempts to perform time series analysis for future price prediction using an LSTM neural network. 
+
+#### Key Steps
+1.	Creating a neural network with one LSTM layer and one Dense layer for time series prediction of the water allocation price dataset
+2.	Training the model with a training dataset
+3.	Making predictions on both training and testing datasets
+
+
+### Time Series Estimation via a Bayesian Neural Network.ipynb
+This notebook helps to make predictions for the water transaction price time series dataset using a Bayesian probabilistic model.. 
+#### Key Steps
+1.	Creating a neural network with Dense Variational layers to obtain probability distributions for weights and biases of the model
+2.	Training the model with a training dataset
+3.	Making predictions on both training and testing datasets
+4.	Making additional predictions to observe uncertainty of the model
+
+### Time Series Estimation with TensorFlow Structural Modelling.ipynb ([3.3-3.11] - NEURAL_NETWORKS Folder)
+This notebook helps to make predictions for the water transaction price time series dataset using a structural time series model.
+#### Key Steps
+1.	Decomposing the water transaction data into its constituent parts
+2.	Inspecting and analysing the patterns in the data
+3.	Creating a structural time series model using the trends from the data decomposition
+4.	Fitting the model and making predictions using a testing dataset
+
+
+
+### Neural Network Pruning via a Multi-arm Bandit Approach.ipynb ([3.3-3.11] - NEURAL_NETWORKS Folder)
+This notebook attempts to employ a multi-arm bandit approach to remove unnecessary weights from a trained deep neural network with two Dense hidden layers without compromising the performance of the model. 
+#### Key Steps
+1.	Creating a deep neural network with two Dense hidden layers
+2.	Training the model with a training dataset
+3.	Making predictions on both training and testing datasets
+4.	Employing a multi-arm bandit algorithm (epsilon greedy) to remove unnecessary weights of the model
+5.	Performing 10 percent pruning of the model
+6.	Making predictions on both training and testing datasets using the model with new weights
+
+
+
+
+### MOMENT_MONTHLY_PADDED.ipynb ([3.15] - MOMENT MODEL Folder)
+This notebook utilizes the MOMENT model to analyze and forecast water transaction prices using monthly padded data. The data is padded to meet the minimum sequence length requirement of the model.
+
+#### Key Steps
+1. Load and preprocess the dataset to ensure it meets the input requirements of the MOMENT model.
+2. Pad the data to achieve the required sequence length for the model.
+3. Initialize and configure the MOMENT model for the forecasting task.
+4. Train the model on the padded monthly data.
+5. Evaluate the model's performance and visualize the forecasting results.
+6. Analyze the model's output to gain insights into the data patterns and prediction accuracy.
+
 
 #### Key Steps
 1. Load zone data and exogenous datasets (e.g., water temperature, rainfall, watercourse discharge).
@@ -134,25 +206,7 @@ This notebook integrates exogenous variables into the time series analysis using
 10. Generate forecasts for the test data.
 11. Visualize the actual vs. forecasted prices, including confidence intervals.
 
-
-### REGRESSION_LSTM.ipynb
-This notebook attempts to perform linear regression and regression by deep neural networks on volume monthly weighted water allocation prices for their prediction based on monthly total traded water volumes to examine the possibility of creating a simple price prediction model without initially tending to use exogenous variables and feature engineering tools. Furthermore, the notebook attempts to perform time series analysis for future price prediction using an LSTM neural network. 
-
-#### Key Steps
-1.	Data is first processed, and monthly volume weighted water prices are calculated for each month of each representative year in the water market data.
-2.	Lower and upper limitations are posed on the quality data obtained from the above step.
-3.	The new dataset is then divided into training and testing datasets, scaled, and used for training a linear regression model for prediction.
-4.	A deep neural network is then created with two Dense hidden layers for regression analysis to capture highly non-linear relationships between monthly total traded volume and monthly volume weighted water prices.
-5.	An LSTM neural network is created with the aim of performing time series analysis for future price prediction using only monthly volume weighted water prices.
-6.	Three datasets of exogenous variables, namely monthly mean temperature, monthly rainfall, and monthly mean water course discharge, are imported, cleaned, and merged with the volume-price data obtained in the second key step above.
-#### Future Action
-•	an LSTM model will be trained using more reliable data obtained from the use of feature engineering tools
-•	A cross-validated grid search and Bayesian optimization will be performed for tuning the model’s hyperparameters
-•	Different multi-arm bandit algorithms, such as epsilon-greedy, upper confidence bound, etc.,  will be employed to remove insignificant weights and reduce the network size.
-•	A neural network integrated with Bayesian probability, also known as Bayesian neural network, will be employed to have more reliable price prediction model
-
-#### Usage
-The notebook puts a strong emphasis on the highly non-linear relationship between monthly total traded water volume and monthly volume weighted price by proving ineffectiveness of regression methods of machine learning and deep learning. The results clearly demonstrate a need for more reliable data sources for exogenous variables and feature engineering tools, including but not limited to KMeans and Principal Component Analysis. 
+### ARIMAX.ipynb
 
 
 ## Optimisation Folder
