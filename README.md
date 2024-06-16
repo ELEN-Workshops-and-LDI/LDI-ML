@@ -48,7 +48,10 @@ To run the scripts and notebooks in this repository, you will need the following
 - `xml.etree.ElementTree`: For parsing XML data.
 - `jupyter`: For running Jupyter notebooks.
 - `keras`: For building and training deep learning models.
-- `tensorflow`: For building and training deep learning models.
+- `tensorflow`: For building and training deep learning models. 
+- `tensorflow_probability`: For building and training deep learning models. 
+- `pytorch`: For building and training deep learning models.
+
 
 
 Scripts can be run using jupyter notebook.
@@ -92,18 +95,6 @@ This notebook is used as a preliminary analysis to cluster the stations into gro
 
 We seperate the three zones analysed and add cluster to the datasets before exporting to CSV: zone_data_1A_clustered, zone_data_6_clustered, zone_data_7_clustered.
 
-### ARMA.ipynb
-This section performs ARMA (AutoRegressive Moving Average) analysis for understanding and forecasting time series data related fro wateer share trading prices. 
-
-#### Key Steps in the Notebook:
-- The data is first loaded and preprocessed to ensure it is suitable for time series analysis.
-- The model is fitted to the data, and diagnostics are run to check the adequacy of the model fit.
-- Forecasts are generated from the model, and the results are visualized to assess the model's predictive power.
-
-(In the Future, Stationarity tests will be conducted to check if the data needs differencing to make it stationary.)
-
-#### Usage:
-To perform ARMA analysis, load your time series data into the notebook, ensuring it is clean and appropriately indexed by date. Adjust the model parameters based on the characteristics of your data.
 
 
 ### EXOG_PCA_INDIVIDUAL.ipynb ([3.2] - EXOG_PCA)
@@ -113,7 +104,7 @@ This notebook is used to perform PCA analysis on the exogenous data to identify 
 To perform PCA analysis, insert the file path of the time series data you want to analyze in the `file_path` column of the `data_files` list. Adjust the `row_thresh_multiplier` to control the amount of data to include in the analysis. (or the threshold to remove the data if it is missing)
 
 
-### OUTLIER_ANALYSIS_REMOVAL.ipynb
+### OUTLIER_ANALYSIS_REMOVAL.ipynb ([3.2] - EXOG_PCA)
 This section uses multiple methods to remove and clean data. From trying k-means algorithms, to trying rolling mean to better clean and remove outliers.
 
 #### Usage
@@ -121,6 +112,7 @@ Run the notebook, data will be visualised
 
 ### Data Processing.ipynb
 This notebook helps to obtain more reliable datasets from the raw water market data by inspecting, analysing, and utilizing its features. 
+
 #### Key Steps
 1.	Inspecting and analysing the features of the raw water market data
 2.	Utilizing relevant non-numeric features of the data to obtain comparatively more reliable datasets
@@ -179,6 +171,53 @@ This notebook attempts to employ a multi-arm bandit approach to remove unnecessa
 5.	Performing 10 percent pruning of the model
 6.	Making predictions on both training and testing datasets using the model with new weights
 
+### ARMA.ipynb ([3.12-3.14] - ARMA_AND_ARIMA Folder)
+This section performs ARMA (AutoRegressive Moving Average) analysis for understanding and forecasting time series data related fro wateer share trading prices. 
+
+
+#### Key Steps in the Notebook:
+- The data is first loaded and preprocessed to ensure it is suitable for time series analysis.
+- The model is fitted to the data, and diagnostics are run to check the adequacy of the model fit.
+- Forecasts are generated from the model, and the results are visualized to assess the model's predictive power.
+
+(In the Future, Stationarity tests will be conducted to check if the data needs differencing to make it stationary.)
+
+#### Usage:
+To perform ARMA analysis, load your time series data into the notebook, ensuring it is clean and appropriately indexed by date. Adjust the model parameters based on the characteristics of your data.
+
+### Rolling ARMA and ARIMAX.ipynb ([3.12-3.14] - ARMA_AND_ARIMA Folder)
+This notebook is designed to implement rolling ARMA and ARIMAX models for dynamic time series forecasting of water trading prices. The rolling models will allow us to continuously update forecasts as new data becomes available, providing more accurate and timely predictions.
+
+#### Key Steps
+1. Load and preprocess the time series data, ensuring it is clean and appropriately indexed by date.
+2. Define the window size for the rolling forecast and the order of the ARMA/ARIMAX models.
+3. Implement a loop to perform the rolling forecast:
+   - For each iteration, fit the ARMA or ARIMAX model to the current window of data.
+   - Forecast the next step and append the prediction to the results.
+   - Slide the window one step forward.
+4. Evaluate the performance of the rolling models by comparing the predicted values against actual values using metrics such as RMSE (Root Mean Squared Error).
+5. Visualize the rolling forecast results alongside the actual data to assess the model's effectiveness.
+6. Optionally, adjust model parameters or the window size based on the performance metrics to optimize the forecasts.
+
+#### Usage:
+To use this notebook, load your time series data into the rolling ARMA or ARIMAX models, ensuring the data is preprocessed correctly. Adjust the model parameters and window size as needed based on the characteristics of your data and the desired forecast accuracy.
+
+### ARIMAX.ipynb ([3.16] - ARIMA_AND_SARIMA Folder & OLD_DATA folder)
+This notebook is designed to implement ARIMAX models for dynamic time series forecasting of water trading prices. The ARIMAX models will allow us to continuously update forecasts as new data becomes available, providing more accurate and timely predictions.
+
+#### Key Steps
+1. Load zone data and exogenous datasets (e.g., water temperature, rainfall, watercourse discharge).
+2. Separate and sort the data based on cluster assignments and creation dates.
+3. Align exogenous data with the main dataset by date and fill missing values.
+4. Standardize the exogenous data using StandardScaler.
+5. Perform PCA to reduce dimensionality and identify principal components.
+6. Create a final DataFrame by joining PCA components with the target variable (Price Per ML ($)).
+7. Align and resample exogenous data to daily frequency.
+8. Split the data into training and testing sets.
+9. Fit the SARIMAX model using the training data and specified parameters.
+10. Generate forecasts for the test data.
+11. Visualize the actual vs. forecasted prices, including confidence intervals.
+
 
 
 
@@ -194,23 +233,10 @@ This notebook utilizes the MOMENT model to analyze and forecast water transactio
 6. Analyze the model's output to gain insights into the data patterns and prediction accuracy.
 
 
-#### Key Steps
-1. Load zone data and exogenous datasets (e.g., water temperature, rainfall, watercourse discharge).
-2. Separate and sort the data based on cluster assignments and creation dates.
-3. Align exogenous data with the main dataset by date and fill missing values.
-4. Standardize the exogenous data using StandardScaler.
-5. Perform PCA to reduce dimensionality and identify principal components.
-6. Create a final DataFrame by joining PCA components with the target variable (Price Per ML ($)).
-7. Align and resample exogenous data to daily frequency.
-8. Split the data into training and testing sets.
-9. Fit the SARIMAX model using the training data and specified parameters.
-10. Generate forecasts for the test data.
-11. Visualize the actual vs. forecasted prices, including confidence intervals.
-
-### ARIMAX.ipynb
 
 
-## Optimisation Folder (Meredith)
+
+## Optimisation Folder & inner folder (Meredith)
 ### PreparingData.ipynb
 #### Key Steps
 1. Implementing functions to fit and forecast from differet models and compare results
@@ -230,3 +256,63 @@ This notebook uses the output of maximum  models for the optimisation of volumes
 3. Comparison of results
 #### Future Action
 Input and testing of results from other predictive models, e.g. LSTM. This was not done due to these components of the project being develope simultaneously.
+
+
+## Optimisation 2([5] - PORTFOLIO OPTIMISATION Folder)
+### Compute covariance [5.0]
+This Jupyter notebook is dedicated to computing the covariance and returns of different financial zones and the ASX index. The notebook processes monthly data from various sources, aligns them by date, and calculates the percentage change in prices to determine returns. These returns are then used to compute the covariance matrix, which is essential for understanding the relationships between the different zones and the ASX index in terms of price movements.
+
+Key steps involved in the notebook:
+1. Import necessary libraries such as pandas and numpy.
+2. Load monthly data for ASX and different zones from CSV files.
+3. Convert date strings into datetime objects and align all data to a common monthly period.
+4. Set the 'Date' as the index for each DataFrame and ensure there are no duplicate indices.
+5. Intersect the indices of all DataFrames to find common dates and reindex the DataFrames to these common dates.
+6. Calculate returns by computing the percentage change in prices.
+7. Combine the returns of all zones and the ASX into a single DataFrame.
+8. Compute the covariance matrix from the combined returns DataFrame.
+9. Output the returns and covariance matrix for analysis.
+
+This notebook is crucial for portfolio optimization as it provides insights into how different assets move in relation to each other, which is fundamental for risk management and allocation strategies.
+
+
+
+### Compute diminishing SVG [5.3]
+
+This Jupyter notebook is focused on implementing a Stochastic Gradient Descent (SGD) with a diminishing step size for portfolio optimization. The goal is to maximize the Sharpe ratio, which is a measure of return per unit of risk, by adjusting the portfolio weights.
+
+Key steps involved in the notebook:
+1. Import necessary libraries such as numpy for numerical operations and pandas for data handling.
+2. Load the combined returns data from a CSV file into a pandas DataFrame.
+3. Convert the DataFrame into a numpy array to facilitate calculations.
+4. Define functions to calculate the Sharpe ratio and its gradient, which are essential for the optimization process.
+5. Implement the SGD algorithm with a diminishing step size to optimize the portfolio weights. This includes:
+   - Calculating the gradient of the Sharpe ratio with respect to the weights.
+   - Updating the weights using the calculated gradient and the diminishing step size.
+   - Normalizing the weights so that their sum equals 1 and ensuring they are non-negative.
+   - Storing the history of Sharpe ratios and weights for analysis.
+6. Plot the progression of the Sharpe ratio and the changes in portfolio weights over iterations using matplotlib.
+7. Output the optimal portfolio weights and display them in a table format using pandas.
+
+This notebook is crucial for understanding how different asset allocations can affect the performance of a portfolio and allows for dynamic adjustments based on the calculated gradients and changing market conditions.
+
+
+### Newton method Computation [5.4]
+
+This Jupyter notebook is designed to implement the Newton's method for optimizing portfolio weights to maximize the Sharpe ratio. The Sharpe ratio is a measure of the excess return per unit of risk in an investment.
+
+Key steps involved in the notebook:
+1. Import necessary libraries such as numpy for numerical operations and pandas for data handling.
+2. Load the mean returns and covariance matrix data from CSV files into pandas DataFrames.
+3. Convert the DataFrames into numpy arrays to facilitate calculations.
+4. Define functions to calculate the Sharpe ratio, its gradient, and its Hessian, which are essential for the optimization process.
+5. Implement the Newton's method to optimize the portfolio weights. This includes:
+   - Calculating the gradient and Hessian of the Sharpe ratio with respect to the weights.
+   - Updating the weights using the inverse of the Hessian matrix multiplied by the gradient.
+   - Normalizing the weights so that their sum equals 1 and ensuring they are non-negative.
+   - Storing the history of Sharpe ratios and weights for analysis.
+6. Plot the progression of the Sharpe ratio and the changes in portfolio weights over iterations using matplotlib.
+7. Output the optimal portfolio weights and display them in a table format using pandas.
+
+This notebook is crucial for understanding how different asset allocations can affect the performance of a portfolio and allows for dynamic adjustments based on the calculated gradients and changing market conditions.
+
