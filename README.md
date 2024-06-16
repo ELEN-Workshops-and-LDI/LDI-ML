@@ -19,6 +19,7 @@ This repository contains a comprehensive collection of Jupyter notebooks and Pyt
         arma-->modP("ARMA_output_Price.csv"):::output
         arma-->modV("ARMA_output_Volume.csv"):::output
 
+
         modP-->opt
         modV-->opt
         subgraph Optimisation
@@ -209,12 +210,23 @@ This notebook utilizes the MOMENT model to analyze and forecast water transactio
 ### ARIMAX.ipynb
 
 
-## Optimisation Folder
+## Optimisation Folder (Meredith)
+### PreparingData.ipynb
+#### Key Steps
+1. Implementing functions to fit and forecast from differet models and compare results
+
+The outputs of this are read into the next notebook:
+### MaximumLikelihood.ipynb
+#### Key Steps
+1. Fitting standard deviations to predictions using maximum likelihood techniques
+2. Predicting the likelihood that a price will be higher in the future
+
+The outputs of this are read into the next notebook:
 ### RollingOptimisation.ipynb
-This notebook uses the output of ARMA for the optimisation of volumes purchased in time that meet a target volume while minimising cost.
+This notebook uses the output of maximum  models for the optimisation of volumes purchased in time that meet a target volume while minimising cost.
 #### Key Steps
 1. Implementation of a solution to the linear program formulation of the problem
 2. Implementation of multiple approaches to dealing with the uncertainty of the data
 3. Comparison of results
 #### Future Action
-Input and testing of results from other predictive models, e.g. ARIMAX and LSTM. This was not done due to these components of the project being develope simultaneously.
+Input and testing of results from other predictive models, e.g. LSTM. This was not done due to these components of the project being develope simultaneously.
